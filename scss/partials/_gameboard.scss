@@ -1,0 +1,151 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+body {
+  color: $text-color;
+  background-color: $background-color;
+  font-family: 'Poiret One', sans-serif;
+}
+
+#app {
+  padding: 20px;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  margin: 35vh 0;
+}
+.menu_panel {
+  .menu_panel--title {
+    font-family: 'Indie Flower';
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .menu_panel--results {
+    text-align: center;
+    font-size: 1.2rem;
+
+    span:first-child {
+      margin-right: 30px;
+    }
+  }
+}
+
+.gameboard {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 20px auto;
+  max-width: 960px;
+
+  .gameboard_card {
+    width: 150px;
+    height: 150px;
+    background-color: $white-color;
+    margin: 5px;
+    cursor: pointer;
+    box-shadow: 0px 0px 10px 0px $lightgray-color;
+    border-radius: 5px;
+
+    &:hover {
+      box-shadow: 0px 0px 15px 2px $darkgray-color;
+    }
+  }
+
+  .shoes {
+    background-image: url('../img/memory.svg');
+    background-repeat: no-repeat;
+    background-size: 450%;
+    background-position: -35px -20px;
+  }
+
+  .goggles {
+    background-image: url('../img/memory.svg');
+    background-repeat: no-repeat;
+    background-size: 450%;
+    background-position: -186px -19px;
+  }
+
+  .axe {
+    background-image: url('../img/memory.svg');
+    background-repeat: no-repeat;
+    background-size: 450%;
+    background-position: -339px -3px;
+  }
+
+  .rope {
+    background-image: url('../img/memory.svg');
+    background-repeat: no-repeat;
+    background-size: 450%;
+    background-position: -488px -5px;
+  }
+
+  .mountains {
+    background-image: url('../img/memory.svg');
+    background-repeat: no-repeat;
+    background-size: 450%;
+    background-position: -37px -178px;
+  }
+
+  .carabiner {
+    background-image: url('../img/memory.svg');
+    background-repeat: no-repeat;
+    background-size: 450%;
+    background-position: -186px -155px;
+  }
+
+  .map {
+    background-image: url('../img/memory.svg');
+    background-repeat: no-repeat;
+    background-size: 450%;
+    background-position: -338px -167px;
+  }
+
+  .sign {
+    background-image: url('../img/memory.svg');
+    background-repeat: no-repeat;
+    background-size: 450%;
+    background-position: -490px -152px;
+  }
+
+  .jacket {
+    background-image: url('../img/memory.svg');
+    background-repeat: no-repeat;
+    background-size: 450%;
+    background-position: -37px -327px;
+  }
+
+  .compass {
+    background-image: url('../img/memory.svg');
+    background-repeat: no-repeat;
+    background-size: 450%;
+    background-position: -187px -315px;
+  }
+
+  .gloves {
+    background-image: url('../img/memory.svg');
+    background-repeat: no-repeat;
+    background-size: 450%;
+    background-position: -338px -326px;
+  }
+
+  .backpack {
+    background-image: url('../img/memory.svg');
+    background-repeat: no-repeat;
+    background-size: 450%;
+    background-position: -488px -312px;
+  }
+
+  .gameboard_card--hide {
+    background-image: url('../img/backcard.jpg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: -10px 49px;
+  }
+}
