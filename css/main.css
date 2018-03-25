@@ -25,8 +25,13 @@ body {
 .menu_panel .menu_panel--results {
   text-align: center;
   font-size: 1.2rem; }
-  .menu_panel .menu_panel--results span:first-child {
+  .menu_panel .menu_panel--results span {
     margin-right: 30px; }
+  .menu_panel .menu_panel--results .menu_panel--new {
+    font-weight: 600;
+    cursor: pointer; }
+    .menu_panel .menu_panel--results .menu_panel--new:hover {
+      text-shadow: 1px 1px #737373; }
 
 .gameboard {
   display: flex;

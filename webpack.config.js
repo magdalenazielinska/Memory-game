@@ -26,7 +26,7 @@ module.exports = {
                 test: /\.(png|jpg|gif|svg)$/,
                 use: [
                     {
-                        loader: 'file-loader?name=/public/icons/[name].[ext]',
+                        loader: 'file-loader?name=/img/[name].[ext]',
                         options: {
                             limit: 20000,
                             name: '../img/[name].[ext]'

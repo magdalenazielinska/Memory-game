@@ -6,18 +6,6 @@ import { GameBoard } from './gameboard.jsx';
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    class MenuPanel extends React.Component {
-        render() {
-
-            return (
-                <div className='menu_panel'>
-                    <h1 className='menu_panel--title'>Memory Game - collect your mountain equipment!</h1>
-                    <div className='menu_panel--results'><span>Time: 00:00:00</span> <span>Moves: 0</span></div>
-                </div>
-            )
-        }
-    }
-
     class App extends React.Component {
         constructor(props) {
             super(props);
@@ -28,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         componentDidMount() {
             this.intervalId = setTimeout(() => this.setState({
-                isLoading: false }), 1500);
+                isLoading: false }), 1000);
         }
 
         componentWillUnmount() {
@@ -47,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             } else {
                 return <div>
-                    <MenuPanel/>
+
                     <GameBoard/>
                 </div>
             }
