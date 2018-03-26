@@ -15,7 +15,6 @@ export class GameBoard extends React.Component {
         super (props);
         this.state = {
             classes: cardClasses,
-            cardList: [],
             hours: 0,
             minutes: 0,
             seconds: 0,
@@ -105,10 +104,10 @@ export class GameBoard extends React.Component {
             });
         }
         else {
-            this.state.active[0].classList.remove('gameboard_card--disabled');
-            this.state.active[1].classList.remove('gameboard_card--disabled');
             this.state.active[0].classList.add('gameboard_card--unmatch');
             this.state.active[1].classList.add('gameboard_card--unmatch');
+            this.state.active[0].classList.remove('gameboard_card--disabled');
+            this.state.active[1].classList.remove('gameboard_card--disabled');
             setTimeout(() => {
                 this.state.active[0].classList.add('gameboard_card--hide');
                 this.state.active[1].classList.add('gameboard_card--hide');
@@ -125,6 +124,20 @@ export class GameBoard extends React.Component {
 
     }
 
+    newGame = () => {
+        let newCards = this.shuffleCard(cardClasses);
+        clearInterval(this.intervalId);
+        this.setState({
+            classes: newCards,
+            hours: 0,
+            minutes: 0,
+            seconds: 0,
+            moves: 0,
+            matches: 0,
+            active: []
+        });
+    }
+
     render() {
         let cards = this.state.classes.map( (item, index) => {
             let card = 'this.card' + index;
@@ -138,17 +151,14 @@ export class GameBoard extends React.Component {
                     </div>
         });
 
-        // let cardList = this.state.cardList;
-        // cardList.push(cards);
-        // console.log(this.state.cardList)
-
         return (
             <div>
                 <MenuPanel time={this.state.time}
                            moves={this.state.moves}
                            hours={this.state.hours}
                            minutes={this.state.minutes}
-                           seconds={this.state.seconds}/>
+                           seconds={this.state.seconds}
+                           newGame={this.newGame}/>
                 <div className='gameboard'>
                     {cards}
                 </div>

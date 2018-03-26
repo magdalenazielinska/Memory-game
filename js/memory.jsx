@@ -24,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         render() {
-
             if (this.state.isLoading) {
                 return <div className='loader'>
                     <CircleLoader
@@ -34,10 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     />
                 </div>
             } else {
-                return <div>
-
-                    <GameBoard/>
-                </div>
+                return <GameBoard/>
             }
         }
     }

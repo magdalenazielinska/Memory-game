@@ -12288,7 +12288,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }, {
             key: 'render',
             value: function render() {
-
                 if (this.state.isLoading) {
                     return _react2.default.createElement(
                         'div',
@@ -12300,11 +12299,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         })
                     );
                 } else {
-                    return _react2.default.createElement(
-                        'div',
-                        null,
-                        _react2.default.createElement(_gameboard.GameBoard, null)
-                    );
+                    return _react2.default.createElement(_gameboard.GameBoard, null);
                 }
             }
         }]);
@@ -28588,9 +28583,22 @@ var GameBoard = exports.GameBoard = function (_React$Component) {
             _this.addMoves();
         };
 
+        _this.newGame = function () {
+            var newCards = _this.shuffleCard(cardClasses);
+            clearInterval(_this.intervalId);
+            _this.setState({
+                classes: newCards,
+                hours: 0,
+                minutes: 0,
+                seconds: 0,
+                moves: 0,
+                matches: 0,
+                active: []
+            });
+        };
+
         _this.state = {
             classes: cardClasses,
-            cardList: [],
             hours: 0,
             minutes: 0,
             seconds: 0,
@@ -28681,10 +28689,10 @@ var GameBoard = exports.GameBoard = function (_React$Component) {
                     active: []
                 });
             } else {
-                this.state.active[0].classList.remove('gameboard_card--disabled');
-                this.state.active[1].classList.remove('gameboard_card--disabled');
                 this.state.active[0].classList.add('gameboard_card--unmatch');
                 this.state.active[1].classList.add('gameboard_card--unmatch');
+                this.state.active[0].classList.remove('gameboard_card--disabled');
+                this.state.active[1].classList.remove('gameboard_card--disabled');
                 setTimeout(function () {
                     _this3.state.active[0].classList.add('gameboard_card--hide');
                     _this3.state.active[1].classList.add('gameboard_card--hide');
@@ -28719,10 +28727,6 @@ var GameBoard = exports.GameBoard = function (_React$Component) {
                     } });
             });
 
-            // let cardList = this.state.cardList;
-            // cardList.push(cards);
-            // console.log(this.state.cardList)
-
             return _react2.default.createElement(
                 'div',
                 null,
@@ -28730,7 +28734,8 @@ var GameBoard = exports.GameBoard = function (_React$Component) {
                     moves: this.state.moves,
                     hours: this.state.hours,
                     minutes: this.state.minutes,
-                    seconds: this.state.seconds }),
+                    seconds: this.state.seconds,
+                    newGame: this.newGame }),
                 _react2.default.createElement(
                     'div',
                     { className: 'gameboard' },
@@ -28773,9 +28778,21 @@ var MenuPanel = exports.MenuPanel = function (_React$Component) {
     _inherits(MenuPanel, _React$Component);
 
     function MenuPanel() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
         _classCallCheck(this, MenuPanel);
 
-        return _possibleConstructorReturn(this, (MenuPanel.__proto__ || Object.getPrototypeOf(MenuPanel)).apply(this, arguments));
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = MenuPanel.__proto__ || Object.getPrototypeOf(MenuPanel)).call.apply(_ref, [this].concat(args))), _this), _this.handleClick = function () {
+            if (typeof _this.props.newGame() === 'function') {
+                _this.props.newGame();
+            }
+        }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
     _createClass(MenuPanel, [{
@@ -28805,7 +28822,7 @@ var MenuPanel = exports.MenuPanel = function (_React$Component) {
                     ),
                     _react2.default.createElement(
                         'span',
-                        { className: 'menu_panel--new' },
+                        { className: 'menu_panel--new', onClick: this.handleClick },
                         'New game'
                     )
                 )
