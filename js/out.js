@@ -28577,25 +28577,25 @@ var GameBoard = exports.GameBoard = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (GameBoard.__proto__ || Object.getPrototypeOf(GameBoard)).call(this, props));
 
         _this.showCard = function (index) {
-
-            //open the card
             _this['card' + index].classList.remove('gameboard_card--hide');
-            var activeUpdate = _this.state.active;
-            activeUpdate.push(_this['card' + index]);
+            _this['card' + index].classList.add('gameboard_card--disabled');
+            var activeAdd = _this.state.active;
+            activeAdd.push(_this['card' + index]);
             _this.setState({
-                active: activeUpdate
+                active: activeAdd
             });
 
-            //count moves
             _this.addMoves();
         };
 
         _this.state = {
             classes: cardClasses,
-            clicked: false,
+            hours: 0,
+            minutes: 0,
+            seconds: 0,
             time: '00:00:00',
             moves: 0,
-            match: 0,
+            matches: 0,
             active: []
         };
         return _this;
@@ -28608,6 +28608,38 @@ var GameBoard = exports.GameBoard = function (_React$Component) {
             this.setState({
                 classes: shuffleCards
             });
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            var intervalId = setInterval(function () {
+                if (_this2.state.matches < 12) {
+                    if (_this2.state.moves > 0) {
+                        _this2.setState({
+                            seconds: Number(_this2.state.seconds) + 1
+                        });
+                        if (_this2.state.seconds === 60) {
+                            _this2.setState({
+                                seconds: 0,
+                                minutes: Number(_this2.state.minutes) + 1
+                            });
+                            if (_this2.state.minutes === 60) {
+                                _this2.setState({
+                                    minutes: 0,
+                                    hours: Number(_this2.state.minutes) + 1
+                                });
+                            }
+                        }
+                    }
+                }
+            }, 1000);
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            clearInterval(this.intervalId);
         }
     }, {
         key: 'shuffleCard',
@@ -28624,19 +28656,43 @@ var GameBoard = exports.GameBoard = function (_React$Component) {
         key: 'addMoves',
         value: function addMoves() {
             if (this.state.active.length === 2) {
-                var moves = this.state.moves;
-                var movesAdd = moves + 1;
+                var movesAdd = this.state.moves;
+                movesAdd++;
                 this.setState({
-                    moves: movesAdd,
+                    moves: movesAdd
+                });
+
+                this.matchCards();
+            }
+        }
+    }, {
+        key: 'matchCards',
+        value: function matchCards() {
+            var _this3 = this;
+
+            if (this.state.active[0].className === this.state.active[1].className) {
+                var matchesAdd = this.state.matches;
+                matchesAdd++;
+                this.setState({
+                    matches: matchesAdd,
                     active: []
                 });
+            } else {
+                this.state.active[0].classList.remove('gameboard_card--disabled');
+                this.state.active[1].classList.remove('gameboard_card--disabled');
+                setTimeout(function () {
+                    _this3.state.active[0].classList.add('gameboard_card--hide');
+                    _this3.state.active[1].classList.add('gameboard_card--hide');
+                    _this3.setState({
+                        active: []
+                    });
+                }, 1000);
             }
-            console.log(this.state.moves);
         }
     }, {
         key: 'render',
         value: function render() {
-            var _this2 = this;
+            var _this4 = this;
 
             var cards = this.state.classes.map(function (item, index) {
                 var card = 'this.card' + index;
@@ -28644,19 +28700,24 @@ var GameBoard = exports.GameBoard = function (_React$Component) {
                 //let classes = 'gameboard_card ' + item;
                 return _react2.default.createElement('div', {
                     ref: function ref(item) {
-                        return _this2['card' + index] = item;
+                        return _this4['card' + index] = item;
                     },
                     key: index,
                     className: classes,
+                    type: item,
                     onClick: function onClick() {
-                        _this2.showCard(index);
+                        _this4.showCard(index);
                     } });
             });
 
             return _react2.default.createElement(
                 'div',
                 null,
-                _react2.default.createElement(_menupanel.MenuPanel, { time: this.state.time, moves: this.state.moves }),
+                _react2.default.createElement(_menupanel.MenuPanel, { time: this.state.time,
+                    moves: this.state.moves,
+                    hours: this.state.hours,
+                    minutes: this.state.minutes,
+                    seconds: this.state.seconds }),
                 _react2.default.createElement(
                     'div',
                     { className: 'gameboard' },
@@ -28721,8 +28782,7 @@ var MenuPanel = exports.MenuPanel = function (_React$Component) {
                     _react2.default.createElement(
                         'span',
                         null,
-                        'Time: ',
-                        this.props.time
+                        (this.props.hours > 9 ? this.props.hours : '0' + this.props.hours) + ':' + (this.props.minutes > 9 ? this.props.minutes : '0' + this.props.minutes) + ':' + (this.props.seconds > 9 ? this.props.seconds : '0' + this.props.seconds)
                     ),
                     _react2.default.createElement(
                         'span',

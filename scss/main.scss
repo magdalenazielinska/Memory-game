@@ -97,10 +97,6 @@ body {
     &:hover {
       box-shadow: 0px 0px 15px 2px $darkgray-color;
     }
-
-    .gameboard_card--disabled {
-      pointer-events: none;
-    }
   }
 
   .shoes {
@@ -232,6 +228,10 @@ body {
     .gameboard_card--hide {
       @include cardHide;
       background-position: -10px 49px;
+    }
+
+    .gameboard_card--disabled {
+      pointer-events: none;
     }
   }
 }

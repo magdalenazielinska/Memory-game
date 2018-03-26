@@ -57,8 +57,6 @@ body {
         height: 150px; } }
     .gameboard .gameboard_card:hover {
       box-shadow: 0px 0px 15px 2px #737373; }
-    .gameboard .gameboard_card .gameboard_card--disabled {
-      pointer-events: none; }
   .gameboard .shoes {
     background-image: url(../img/memory.svg);
     background-repeat: no-repeat;
@@ -189,4 +187,6 @@ body {
       background-image: url(../img/backcard.jpg);
       background-repeat: no-repeat;
       background-size: contain;
-      background-position: -10px 49px; } }
+      background-position: -10px 49px; }
+    .gameboard .gameboard_card--disabled {
+      pointer-events: none; } }
