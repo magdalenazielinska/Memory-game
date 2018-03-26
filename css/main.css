@@ -1,3 +1,23 @@
+@keyframes match {
+  0% {
+    transform: scale(1); }
+  50% {
+    transform: scale(1.1); }
+  100% {
+    transform: scale(1); } }
+
+@keyframes unmatch {
+  0% {
+    transform: translate(3px, 0); }
+  25% {
+    transform: translate(-3px, 0); }
+  50% {
+    transform: translate(3px, 0); }
+  75% {
+    transform: translate(-3px, 0); }
+  100% {
+    transform: translate(0, 0); } }
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -27,7 +47,7 @@ body {
   font-size: 1.2rem; }
   .menu_panel .menu_panel--results span {
     display: block; }
-    @media screen and (min-width: 768px) {
+    @media screen and (min-width: 68px) {
       .menu_panel .menu_panel--results span {
         margin-right: 30px;
         display: inline; } }
@@ -51,7 +71,7 @@ body {
     cursor: pointer;
     box-shadow: 0px 0px 10px 0px #b6b6b6;
     border-radius: 5px; }
-    @media screen and (min-width: 768px) {
+    @media screen and (min-width: 68px) {
       .gameboard .gameboard_card {
         width: 150px;
         height: 150px; } }
@@ -122,7 +142,7 @@ body {
     background-repeat: no-repeat;
     background-size: contain;
     background-position: -3px 14px; }
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 68px) {
     .gameboard .shoes {
       background-image: url(../img/memory.svg);
       background-repeat: no-repeat;
@@ -189,4 +209,8 @@ body {
       background-size: contain;
       background-position: -10px 49px; }
     .gameboard .gameboard_card--disabled {
-      pointer-events: none; } }
+      pointer-events: none; }
+    .gameboard .gameboard_card--match {
+      animation: match 1s linear forwards; }
+    .gameboard .gameboard_card--unmatch {
+      animation: unmatch 0.5s linear forwards; } }

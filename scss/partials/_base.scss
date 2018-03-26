@@ -1,0 +1,22 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+body {
+  color: $text-color;
+  background-color: $background-color;
+  font-family: 'Poiret One', sans-serif;
+}
+
+#app {
+  padding: 20px;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  margin: 35vh 0;
+}

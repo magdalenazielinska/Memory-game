@@ -43,6 +43,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     ReactDOM.render(<App />, document.getElementById('app'));
-
-
 });

@@ -15,10 +15,10 @@ export class GameBoard extends React.Component {
         super (props);
         this.state = {
             classes: cardClasses,
+            cardList: [],
             hours: 0,
             minutes: 0,
             seconds: 0,
-            time: '00:00:00',
             moves: 0,
             matches: 0,
             active: []
@@ -89,6 +89,7 @@ export class GameBoard extends React.Component {
             });
 
             this.matchCards();
+            this.tempDisable();
         }
     }
 
@@ -96,6 +97,8 @@ export class GameBoard extends React.Component {
         if (this.state.active[0].className === this.state.active[1].className) {
             let matchesAdd = this.state.matches;
             matchesAdd++;
+            this.state.active[0].classList.add('gameboard_card--match');
+            this.state.active[1].classList.add('gameboard_card--match');
             this.setState({
                 matches: matchesAdd,
                 active: []
@@ -104,14 +107,22 @@ export class GameBoard extends React.Component {
         else {
             this.state.active[0].classList.remove('gameboard_card--disabled');
             this.state.active[1].classList.remove('gameboard_card--disabled');
+            this.state.active[0].classList.add('gameboard_card--unmatch');
+            this.state.active[1].classList.add('gameboard_card--unmatch');
             setTimeout(() => {
                 this.state.active[0].classList.add('gameboard_card--hide');
                 this.state.active[1].classList.add('gameboard_card--hide');
+                this.state.active[0].classList.remove('gameboard_card--unmatch');
+                this.state.active[1].classList.remove('gameboard_card--unmatch');
                 this.setState({
                     active: []
                 });
             }, 1000);
         }
+    }
+
+    tempDisable() {
+
     }
 
     render() {
@@ -123,10 +134,13 @@ export class GameBoard extends React.Component {
                         ref={item => this['card' + index] = item}
                         key={index}
                         className={classes}
-                        type={item}
                         onClick={() => {this.showCard(index)}}>
                     </div>
         });
+
+        // let cardList = this.state.cardList;
+        // cardList.push(cards);
+        // console.log(this.state.cardList)
 
         return (
             <div>

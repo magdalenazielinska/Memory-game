@@ -28590,10 +28590,10 @@ var GameBoard = exports.GameBoard = function (_React$Component) {
 
         _this.state = {
             classes: cardClasses,
+            cardList: [],
             hours: 0,
             minutes: 0,
             seconds: 0,
-            time: '00:00:00',
             moves: 0,
             matches: 0,
             active: []
@@ -28663,6 +28663,7 @@ var GameBoard = exports.GameBoard = function (_React$Component) {
                 });
 
                 this.matchCards();
+                this.tempDisable();
             }
         }
     }, {
@@ -28673,6 +28674,8 @@ var GameBoard = exports.GameBoard = function (_React$Component) {
             if (this.state.active[0].className === this.state.active[1].className) {
                 var matchesAdd = this.state.matches;
                 matchesAdd++;
+                this.state.active[0].classList.add('gameboard_card--match');
+                this.state.active[1].classList.add('gameboard_card--match');
                 this.setState({
                     matches: matchesAdd,
                     active: []
@@ -28680,15 +28683,22 @@ var GameBoard = exports.GameBoard = function (_React$Component) {
             } else {
                 this.state.active[0].classList.remove('gameboard_card--disabled');
                 this.state.active[1].classList.remove('gameboard_card--disabled');
+                this.state.active[0].classList.add('gameboard_card--unmatch');
+                this.state.active[1].classList.add('gameboard_card--unmatch');
                 setTimeout(function () {
                     _this3.state.active[0].classList.add('gameboard_card--hide');
                     _this3.state.active[1].classList.add('gameboard_card--hide');
+                    _this3.state.active[0].classList.remove('gameboard_card--unmatch');
+                    _this3.state.active[1].classList.remove('gameboard_card--unmatch');
                     _this3.setState({
                         active: []
                     });
                 }, 1000);
             }
         }
+    }, {
+        key: 'tempDisable',
+        value: function tempDisable() {}
     }, {
         key: 'render',
         value: function render() {
@@ -28704,11 +28714,14 @@ var GameBoard = exports.GameBoard = function (_React$Component) {
                     },
                     key: index,
                     className: classes,
-                    type: item,
                     onClick: function onClick() {
                         _this4.showCard(index);
                     } });
             });
+
+            // let cardList = this.state.cardList;
+            // cardList.push(cards);
+            // console.log(this.state.cardList)
 
             return _react2.default.createElement(
                 'div',
