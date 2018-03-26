@@ -28577,14 +28577,26 @@ var GameBoard = exports.GameBoard = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (GameBoard.__proto__ || Object.getPrototypeOf(GameBoard)).call(this, props));
 
         _this.showCard = function (index) {
+
+            //open the card
             _this['card' + index].classList.remove('gameboard_card--hide');
+            var activeUpdate = _this.state.active;
+            activeUpdate.push(_this['card' + index]);
+            _this.setState({
+                active: activeUpdate
+            });
+
+            //count moves
+            _this.addMoves();
         };
 
         _this.state = {
             classes: cardClasses,
             clicked: false,
             time: '00:00:00',
-            points: 0
+            moves: 0,
+            match: 0,
+            active: []
         };
         return _this;
     }
@@ -28609,6 +28621,19 @@ var GameBoard = exports.GameBoard = function (_React$Component) {
             return a;
         }
     }, {
+        key: 'addMoves',
+        value: function addMoves() {
+            if (this.state.active.length === 2) {
+                var moves = this.state.moves;
+                var movesAdd = moves + 1;
+                this.setState({
+                    moves: movesAdd,
+                    active: []
+                });
+            }
+            console.log(this.state.moves);
+        }
+    }, {
         key: 'render',
         value: function render() {
             var _this2 = this;
@@ -28631,7 +28656,7 @@ var GameBoard = exports.GameBoard = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 null,
-                _react2.default.createElement(_menupanel.MenuPanel, { time: this.state.time, points: this.state.points }),
+                _react2.default.createElement(_menupanel.MenuPanel, { time: this.state.time, moves: this.state.moves }),
                 _react2.default.createElement(
                     'div',
                     { className: 'gameboard' },
@@ -28673,16 +28698,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var MenuPanel = exports.MenuPanel = function (_React$Component) {
     _inherits(MenuPanel, _React$Component);
 
-    function MenuPanel(props) {
+    function MenuPanel() {
         _classCallCheck(this, MenuPanel);
 
-        var _this = _possibleConstructorReturn(this, (MenuPanel.__proto__ || Object.getPrototypeOf(MenuPanel)).call(this, props));
-
-        _this.state = {
-            time: _this.props.time,
-            points: _this.props.points
-        };
-        return _this;
+        return _possibleConstructorReturn(this, (MenuPanel.__proto__ || Object.getPrototypeOf(MenuPanel)).apply(this, arguments));
     }
 
     _createClass(MenuPanel, [{
@@ -28703,13 +28722,13 @@ var MenuPanel = exports.MenuPanel = function (_React$Component) {
                         'span',
                         null,
                         'Time: ',
-                        this.state.time
+                        this.props.time
                     ),
                     _react2.default.createElement(
                         'span',
                         null,
                         'Moves: ',
-                        this.state.points
+                        this.props.moves
                     ),
                     _react2.default.createElement(
                         'span',
