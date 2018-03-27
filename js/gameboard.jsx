@@ -1,5 +1,7 @@
 import React from 'react';
+import Modal from 'react-modal';
 import { MenuPanel } from './menupanel.jsx';
+import { Congratulations } from "./congratulations.jsx";
 
 const cardClasses = [
                         'shoes', 'goggles', 'axe', 'rope',
@@ -20,7 +22,8 @@ export class GameBoard extends React.Component {
             seconds: 0,
             moves: 0,
             matches: 0,
-            active: []
+            active: [],
+            showModal: false
         }
     }
 
@@ -33,22 +36,20 @@ export class GameBoard extends React.Component {
 
     componentDidMount() {
         let intervalId = setInterval(() => {
-            if (this.state.matches < 12) {
-                if (this.state.moves > 0) {
+            if (this.state.matches < 12 && this.state.moves > 0) {
+                this.setState({
+                    seconds: Number(this.state.seconds) + 1
+                });
+                if (this.state.seconds === 60) {
                     this.setState({
-                        seconds: Number(this.state.seconds) + 1
+                        seconds: 0,
+                        minutes: Number(this.state.minutes) + 1
                     });
-                    if (this.state.seconds === 60) {
+                    if (this.state.minutes === 60) {
                         this.setState({
-                            seconds: 0,
-                            minutes: Number(this.state.minutes) + 1
+                            minutes: 0,
+                            hours: Number(this.state.minutes) + 1
                         });
-                        if (this.state.minutes === 60) {
-                            this.setState({
-                                minutes: 0,
-                                hours: Number(this.state.minutes) + 1
-                            });
-                        }
                     }
                 }
             }
@@ -101,7 +102,7 @@ export class GameBoard extends React.Component {
             this.setState({
                 matches: matchesAdd,
                 active: []
-            });
+            }, this.openModal);
         }
         else {
             this.state.active[0].classList.add('gameboard_card--unmatch');
@@ -134,7 +135,24 @@ export class GameBoard extends React.Component {
             seconds: 0,
             moves: 0,
             matches: 0,
-            active: []
+            active: [],
+            showModal: false
+        });
+    }
+
+    openModal = () => {
+        if (this.state.matches === 12) {
+            setTimeout(() => {
+                this.setState({
+                    showModal: true
+                });
+            }, 500);
+        }
+    }
+
+    closeModal = () => {
+        this.setState({
+            showModal: false
         });
     }
 
@@ -153,8 +171,7 @@ export class GameBoard extends React.Component {
 
         return (
             <div>
-                <MenuPanel time={this.state.time}
-                           moves={this.state.moves}
+                <MenuPanel moves={this.state.moves}
                            hours={this.state.hours}
                            minutes={this.state.minutes}
                            seconds={this.state.seconds}
@@ -162,6 +179,21 @@ export class GameBoard extends React.Component {
                 <div className='gameboard'>
                     {cards}
                 </div>
+                <Modal
+                    isOpen={this.state.showModal}
+                    onRequestClose={this.closeModal}
+                    style={{overlay: {backgroundColor: 'rgba(115, 115, 115, 0.5)'}}}
+                    shouldCloseOnOverlayClick={true}
+                    shouldCloseOnEsc={true}
+                    className='game_finished'>
+                    <Congratulations
+                        moves={this.state.moves}
+                        hours={this.state.hours}
+                        minutes={this.state.minutes}
+                        seconds={this.state.seconds}
+                        newGame={this.newGame}
+                        closeModal={this.closeModal}/>
+                </Modal>
             </div>
         )
     }

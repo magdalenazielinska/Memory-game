@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-//import Modal from 'react-modal';
+import Modal from 'react-modal';
 import { CircleLoader } from 'react-spinners';
 import { GameBoard } from './gameboard.jsx';
 
+
 document.addEventListener('DOMContentLoaded', () => {
+
+    Modal.setAppElement('#app');
 
     class App extends React.Component {
         constructor(props) {

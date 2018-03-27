@@ -3,7 +3,11 @@
   flex-wrap: wrap;
   justify-content: center;
   margin: 20px auto;
-  max-width: 960px;
+  max-width: 260px;
+
+  @media #{$bigdevice} {
+    max-width: 960px;
+  }
 
   .gameboard_card {
     width: 50px;
