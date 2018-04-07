@@ -5,6 +5,12 @@
   margin: 20px auto;
   max-width: 260px;
 
+  &.gameboard--matching {
+    .gameboard_card {
+      pointer-events: none;
+    }
+  }
+
   @media #{$bigdevice} {
     max-width: 960px;
   }
@@ -170,5 +176,7 @@
     .gameboard_card--unmatch {
       animation: unmatch 0.5s linear forwards;
     }
+
+
   }
 }

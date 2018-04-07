@@ -18,7 +18,7 @@ export class Congratulations extends React.Component {
         this.props.minutes > 1 ? minutes = ' minutes' : minutes = ' minute';
 
         return (
-            <div>
+            <section>
                 <p className='game_finished--header'>
                     Congratulations! You are a winner!
                 </p>
@@ -33,7 +33,7 @@ export class Congratulations extends React.Component {
                     onClick={this.handleClick}>
                     Play again
                 </button>
-            </div>
+            </section>
         )
     }
 }

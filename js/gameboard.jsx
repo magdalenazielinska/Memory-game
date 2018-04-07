@@ -69,15 +69,17 @@ export class GameBoard extends React.Component {
     }
 
     showCard = (index) => {
-        this['card'+ index].classList.remove('gameboard_card--hide');
-        this['card'+ index].classList.add('gameboard_card--disabled');
-        let activeAdd = this.state.active;
-        activeAdd.push(this['card'+ index]);
-        this.setState({
-            active: activeAdd
-        });
+        if (this.state.active.length < 2) {
+            this['card'+ index].classList.remove('gameboard_card--hide');
+            this['card'+ index].classList.add('gameboard_card--disabled');
+            let activeAdd = this.state.active;
+            activeAdd.push(this['card'+ index]);
+            this.setState({
+                active: activeAdd
+            });
 
-        this.addMoves();
+            this.addMoves();
+        }
     }
 
     addMoves() {
@@ -88,8 +90,10 @@ export class GameBoard extends React.Component {
                 moves: movesAdd
             });
 
+            this.state.active[0].dataset.active = 'true';
+            this.state.active[1].dataset.active = 'true';
+
             this.matchCards();
-            this.tempDisable();
         }
     }
 
@@ -99,30 +103,31 @@ export class GameBoard extends React.Component {
             matchesAdd++;
             this.state.active[0].classList.add('gameboard_card--match');
             this.state.active[1].classList.add('gameboard_card--match');
-            this.setState({
-                matches: matchesAdd,
-                active: []
-            }, this.openModal);
+            setTimeout(() => {
+                this.setState({
+                    matches: matchesAdd,
+                    active: []
+                }, this.openModal);
+            }, 1000);
         }
         else {
             this.state.active[0].classList.add('gameboard_card--unmatch');
             this.state.active[1].classList.add('gameboard_card--unmatch');
             this.state.active[0].classList.remove('gameboard_card--disabled');
             this.state.active[1].classList.remove('gameboard_card--disabled');
+
             setTimeout(() => {
                 this.state.active[0].classList.add('gameboard_card--hide');
                 this.state.active[1].classList.add('gameboard_card--hide');
                 this.state.active[0].classList.remove('gameboard_card--unmatch');
                 this.state.active[1].classList.remove('gameboard_card--unmatch');
+                this.state.active[0].dataset.active = 'false';
+                this.state.active[1].dataset.active = 'false';
                 this.setState({
                     active: []
                 });
             }, 1000);
         }
-    }
-
-    tempDisable() {
-
     }
 
     newGame = () => {
@@ -158,15 +163,17 @@ export class GameBoard extends React.Component {
 
     render() {
         let cards = this.state.classes.map( (item, index) => {
-            let card = 'this.card' + index;
             let classes = 'gameboard_card gameboard_card--hide ' + item;
-            //let classes = 'gameboard_card ' + item;
-            return <div
-                        ref={item => this['card' + index] = item}
-                        key={index}
-                        className={classes}
-                        onClick={() => {this.showCard(index)}}>
-                    </div>
+
+            return (
+                <div
+                    ref={item => this['card' + index] = item}
+                    key={index}
+                    className={classes}
+                    data-active='false'
+                    onClick={() => {this.showCard(index)}}>
+                </div>
+            )
         });
 
         return (
@@ -176,9 +183,9 @@ export class GameBoard extends React.Component {
                            minutes={this.state.minutes}
                            seconds={this.state.seconds}
                            newGame={this.newGame}/>
-                <div className='gameboard'>
+                <main className={this.state.active.length === 2 ? 'gameboard gameboard--matching' : 'gameboard'}>
                     {cards}
-                </div>
+                </main>
                 <Modal
                     isOpen={this.state.showModal}
                     onRequestClose={this.closeModal}
